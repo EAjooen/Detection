@@ -2,5 +2,5 @@ opencv-python-headless
 streamlit_embedcode
 moviepy
 keras
-tensorflow
+tensorflow==2.3.0
 h5py
