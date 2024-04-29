@@ -218,6 +218,7 @@ numpydoc @ file:///C:/ci_311/numpydoc_1676453412027/work
 oauthlib==3.2.2
 openai==1.13.3
 opencv-python==4.9.0.80
+opencv-pyhon-headless
 openpyxl==3.0.10
 opt-einsum==3.3.0
 optree==0.10.0
