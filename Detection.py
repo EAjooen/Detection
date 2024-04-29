@@ -123,19 +123,6 @@ if __name__ == '__main__':
 		main()	
 
 
-# In[2]:
-
-
-pip install streamlit
-
-
-# In[7]:
-
-
-pip install opencv-python
-
-
-# In[ ]:
 
 
 
