@@ -125,11 +125,6 @@ if __name__ == '__main__':
 
 
 
-# In[7]:
-
-
-pip install opencv-python
-
 
 
 
