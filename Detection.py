@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[9]:
+# In[5]:
 
 
 import streamlit as st
@@ -24,11 +24,6 @@ import sys
 from keras.models import load_model  # TensorFlow is required for Keras to work
 from PIL import Image, ImageOps  # Install pillow instead of PIL
 import numpy as np
-
-
-st.write("check out this [link](https://share.streamlit.io/detection.py)")
-st.markdown(link,unsafe_allow_html=True)
-
 
 def object_detection_image():
     st.title('Cat and Dog Detection for Images')
@@ -128,10 +123,16 @@ if __name__ == '__main__':
 		main()	
 
 
-# In[ ]:
+# In[2]:
 
 
+pip install streamlit
 
+
+# In[7]:
+
+
+pip install opencv-python
 
 
 # In[ ]:
