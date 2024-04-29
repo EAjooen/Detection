@@ -1,5 +1,5 @@
 opencv-python-headless
 streamlit_embedcode
 moviepy
-tensorflow==2.11
+tensorflow
 h5py
