@@ -168,7 +168,6 @@ streamlit-embedcode==0.1.2
 sympy==1.11.1
 tables==3.8.0
 tabulate==0.8.10
-TBB==0.2
 tblib==1.7.0
 tenacity==8.2.2
 tensorboard==2.13.0
