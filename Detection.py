@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
+# In[9]:
 
 
 import streamlit as st
@@ -47,7 +47,7 @@ def object_detection_image():
         np.set_printoptions(suppress=True)
 
         # Load the model
-        model = load_model("keras_model.h5", compile=False)
+        model = load_model("keras_Model.h5", compile=False)
 
         # Load the labels
         class_names = open("labels.txt", "r").readlines()
@@ -121,5 +121,16 @@ def main():
 
 if __name__ == '__main__':
 		main()	
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
 
 
