@@ -4,6 +4,8 @@ from PIL import Image, ImageOps
 from keras.models import load_model
 import os
 import logging
+from signal import signal, SIGPIPE, SIG_DFL
+signal(SIGPIPE,SIG_DFL)
 
 # Set up logging
 logging.basicConfig(filename='app.log', level=logging.INFO)
