@@ -4,14 +4,10 @@ from PIL import Image, ImageOps
 from keras.models import load_model
 import os
 import logging
-from signal import signal, SIGPIPE, SIG_DFL
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-# Handle SIGPIPE
-signal(SIGPIPE, SIG_DFL)
 
 @st.cache_resource
 def load_keras_model():
