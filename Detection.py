@@ -79,8 +79,6 @@ def object_detection_image():
 
 # Main application
 def main():
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGPIPE, signal_handler)
     st.markdown('<p style="font-size: 42px;">Welcome to Cat and Dog Detection App!</p>', unsafe_allow_html=True)
     st.markdown("""
         This project was built using Streamlit
