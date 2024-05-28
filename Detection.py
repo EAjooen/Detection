@@ -5,7 +5,6 @@ from keras.models import load_model
 import os
 import logging
 from signal import signal, SIGPIPE, SIG_DFL
-signal(SIGPIPE,SIG_DFL)
 
 # Set up logging
 logging.basicConfig(filename='app.log', level=logging.INFO)
@@ -80,6 +79,7 @@ def object_detection_image():
 
 # Main application
 def main():
+    signal(SIGPIPE,SIG_DFL)
     st.markdown('<p style="font-size: 42px;">Welcome to Cat and Dog Detection App!</p>', unsafe_allow_html=True)
     st.markdown("""
         This project was built using Streamlit
