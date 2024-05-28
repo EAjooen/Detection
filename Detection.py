@@ -3,6 +3,8 @@ import numpy as np
 from PIL import Image, ImageOps
 from keras.models import load_model
 import os
+from signal import signal, SIGPIPE, SIG_DFL
+signal(SIGPIPE,SIG_DFL) 
 
 def object_detection_image():
     st.title('Cat and Dog Detection for Images')
