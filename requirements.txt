@@ -133,6 +133,7 @@ rich==13.7.1
 rope==1.7.0
 rsa==4.9
 Rtree==1.0.1
+streamlit numpy pillow tensorflow keras
 s3fs==2023.4.0
 safetensors==0.3.2
 scikit-image==0.20.0
