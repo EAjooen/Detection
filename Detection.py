@@ -7,10 +7,12 @@ import logging
 from signal import signal, SIGPIPE, SIG_DFL
 
 # Set up logging
-logging.basicConfig(filename='app.log', level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Function to load the model using caching
+# Handle SIGPIPE
+signal(SIGPIPE, SIG_DFL)
+
 @st.cache_resource
 def load_keras_model():
     model_path = "keras_model.h5"
@@ -19,7 +21,6 @@ def load_keras_model():
         return None
     return load_model(model_path, compile=False)
 
-# Function to load class names using caching
 @st.cache_resource
 def load_class_names():
     labels_path = "labels.txt"
@@ -28,7 +29,6 @@ def load_class_names():
         return None
     return open(labels_path, "r").readlines()
 
-# Function to preprocess the image
 def preprocess_image(image):
     size = (224, 224)
     image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
@@ -36,7 +36,6 @@ def preprocess_image(image):
     normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
     return np.expand_dims(normalized_image_array, axis=0)
 
-# Main function for object detection
 def object_detection_image():
     st.title('Cat and Dog Detection for Images')
     st.subheader("Please scroll down to see the processed image.")
@@ -73,11 +72,10 @@ def object_detection_image():
             my_bar.progress(100)
 
         except Exception as e:
-            logger.error("An error occurred during prediction", exc_info=True)
+            logger.error(f"An error occurred during prediction: {e}", exc_info=True)
             st.error(f"An error occurred during prediction: {e}")
             my_bar.progress(0)
 
-# Main application
 def main():
     st.markdown('<p style="font-size: 42px;">Welcome to Cat and Dog Detection App!</p>', unsafe_allow_html=True)
     st.markdown("""
@@ -98,4 +96,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
