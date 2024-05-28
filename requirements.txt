@@ -52,7 +52,7 @@ jupyterlab-pygments==0.1.2
 jupyterlab_server==2.22.0
 jupyterlab-widgets==3.0.5
 kaleido==0.2.1
-keras==2.13.1
+keras==2.8.0
 keyring==23.13.1
 kiwisolver==1.4.4
 lazy_loader==0.2
@@ -71,7 +71,7 @@ notebook==6.5.4
 notebook_shim==0.2.2
 numba==0.57.1
 numexpr==2.8.4
-numpy==1.24.3
+numpy==1.22.3
 numpydoc==1.5.0
 oauthlib==3.2.2
 opencv-python-headless==4.5.5.64
@@ -93,7 +93,7 @@ patsy==0.5.3
 pep8==1.7.1
 pexpect==4.8.0
 pickleshare==0.7.5
-Pillow==9.4.0
+Pillow==9.0.1
 pip==23.2.1
 pkce==1.0.3
 pkginfo==1.9.6
@@ -163,7 +163,7 @@ spyder-kernels==2.4.4
 SQLAlchemy==1.4.39
 stack-data==0.2.0
 statsmodels==0.14.0
-streamlit==1.33.0
+streamlit==1.9.0
 streamlit-embedcode==0.1.2
 sympy==1.11.1
 tables==3.8.0
@@ -172,7 +172,7 @@ tblib==1.7.0
 tenacity==8.2.2
 tensorboard==2.13.0
 tensorboard-data-server==0.7.2
-tensorflow==2.13.0
+tensorflow==2.8.0
 tensorflow-estimator==2.13.0
 tensorflow-intel
 tensorflow-io-gcs-filesystem==0.31.0
