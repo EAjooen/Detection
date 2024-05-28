@@ -1,14 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[9]:
-
-
 import streamlit as st
 import numpy as np
-import cv2
 from PIL import Image, ImageOps
 from keras.models import load_model
+import os
 
 def object_detection_image():
     st.title('Cat and Dog Detection for Images')
@@ -25,11 +19,23 @@ def object_detection_image():
         np.set_printoptions(suppress=True)
 
         try:
+            # Check if model file exists
+            model_path = "keras_model.h5"
+            if not os.path.exists(model_path):
+                st.error(f"Model file not found: {model_path}")
+                return
+
             # Load the model
-            model = load_model("keras_model.h5", compile=False)
+            model = load_model(model_path, compile=False)
+
+            # Check if labels file exists
+            labels_path = "labels.txt"
+            if not os.path.exists(labels_path):
+                st.error(f"Labels file not found: {labels_path}")
+                return
 
             # Load the labels
-            class_names = open("labels.txt", "r").readlines()
+            class_names = open(labels_path, "r").readlines()
 
             # Create the array of the right shape to feed into the keras model
             data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
@@ -51,7 +57,7 @@ def object_detection_image():
             # Display results
             st.image(img2, caption=f"{class_name[2:]} with confidence {confidence_score:.2f}")
             my_bar.progress(100)
-        
+
         except Exception as e:
             st.error(f"An error occurred: {e}")
             my_bar.progress(0)
@@ -76,16 +82,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
