@@ -172,7 +172,7 @@ tblib==1.7.0
 tenacity==8.2.2
 tensorboard==2.13.0
 tensorboard-data-server==0.7.2
-tensorflow==2.8.0
+tensorflow==2.13.0
 tensorflow-estimator==2.13.0
 tensorflow-intel
 tensorflow-io-gcs-filesystem==0.31.0
