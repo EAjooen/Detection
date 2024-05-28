@@ -3,29 +3,10 @@ import numpy as np
 from PIL import Image, ImageOps
 from keras.models import load_model
 import os
+import logging
 
-@st.cache_resource
-def load_keras_model():
-    model_path = "keras_model.h5"
-    if not os.path.exists(model_path):
-        st.error(f"Model file not found: {model_path}")
-        return None
-    return load_model(model_path, compile=False)
-
-@st.cache_resource
-def load_class_names():
-    labels_path = "labels.txt"
-    if not os.path.exists(labels_path):
-        st.error(f"Labels file not found: {labels_path}")
-        return None
-    return open(labels_path, "r").readlines()
-
-def preprocess_image(image):
-    size = (224, 224)
-    image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
-    image_array = np.asarray(image)
-    normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
-    return np.expand_dims(normalized_image_array, axis=0)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def object_detection_image():
     st.title('Cat and Dog Detection for Images')
@@ -59,8 +40,32 @@ def object_detection_image():
             my_bar.progress(100)
 
         except Exception as e:
+            logger.error("An error occurred during prediction", exc_info=True)
             st.error(f"An error occurred during prediction: {e}")
             my_bar.progress(0)
+
+@st.cache_resource
+def load_keras_model():
+    model_path = "keras_model.h5"
+    if not os.path.exists(model_path):
+        st.error(f"Model file not found: {model_path}")
+        return None
+    return load_model(model_path, compile=False)
+
+@st.cache_resource
+def load_class_names():
+    labels_path = "labels.txt"
+    if not os.path.exists(labels_path):
+        st.error(f"Labels file not found: {labels_path}")
+        return None
+    return open(labels_path, "r").readlines()
+
+def preprocess_image(image):
+    size = (224, 224)
+    image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
+    image_array = np.asarray(image)
+    normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
+    return np.expand_dims(normalized_image_array, axis=0)
 
 def main():
     st.markdown('<p style="font-size: 42px;">Welcome to Cat and Dog Detection App!</p>', unsafe_allow_html=True)
