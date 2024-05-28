@@ -16,7 +16,6 @@ import time ,sys
 from streamlit_embedcode import github_gist
 import urllib.request
 import urllib
-import moviepy.editor as moviepy
 import cv2
 import numpy as np
 import time
