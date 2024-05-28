@@ -4,6 +4,29 @@ from PIL import Image, ImageOps
 from keras.models import load_model
 import os
 
+@st.cache_resource
+def load_keras_model():
+    model_path = "keras_model.h5"
+    if not os.path.exists(model_path):
+        st.error(f"Model file not found: {model_path}")
+        return None
+    return load_model(model_path, compile=False)
+
+@st.cache_resource
+def load_class_names():
+    labels_path = "labels.txt"
+    if not os.path.exists(labels_path):
+        st.error(f"Labels file not found: {labels_path}")
+        return None
+    return open(labels_path, "r").readlines()
+
+def preprocess_image(image):
+    size = (224, 224)
+    image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
+    image_array = np.asarray(image)
+    normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
+    return np.expand_dims(normalized_image_array, axis=0)
+
 def object_detection_image():
     st.title('Cat and Dog Detection for Images')
     st.subheader("Please scroll down to see the processed image.")
@@ -11,55 +34,32 @@ def object_detection_image():
     file = st.file_uploader('Upload Image', type=['jpg', 'png', 'jpeg'])
     if file is not None:
         img1 = Image.open(file)
-        img2 = np.array(img1)
         st.image(img1, caption="Uploaded Image")
         my_bar = st.progress(0)
 
-        # Disable scientific notation for clarity
         np.set_printoptions(suppress=True)
 
+        model = load_keras_model()
+        if model is None:
+            return
+
+        class_names = load_class_names()
+        if class_names is None:
+            return
+
+        image_data = preprocess_image(img1)
+
         try:
-            # Check if model file exists
-            model_path = "keras_model.h5"
-            if not os.path.exists(model_path):
-                st.error(f"Model file not found: {model_path}")
-                return
-
-            # Load the model
-            model = load_model(model_path, compile=False)
-
-            # Check if labels file exists
-            labels_path = "labels.txt"
-            if not os.path.exists(labels_path):
-                st.error(f"Labels file not found: {labels_path}")
-                return
-
-            # Load the labels
-            class_names = open(labels_path, "r").readlines()
-
-            # Create the array of the right shape to feed into the keras model
-            data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-
-            # Preprocess the image
-            image = img1.convert("RGB")
-            size = (224, 224)
-            image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
-            image_array = np.asarray(image)
-            normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
-            data[0] = normalized_image_array
-
-            # Predict using the model
-            prediction = model.predict(data)
+            prediction = model.predict(image_data)
             index = np.argmax(prediction)
             class_name = class_names[index].strip()
             confidence_score = prediction[0][index]
 
-            # Display results
-            st.image(img2, caption=f"{class_name[2:]} with confidence {confidence_score:.2f}")
+            st.image(img1, caption=f"{class_name[2:]} with confidence {confidence_score:.2f}")
             my_bar.progress(100)
 
         except Exception as e:
-            st.error(f"An error occurred: {e}")
+            st.error(f"An error occurred during prediction: {e}")
             my_bar.progress(0)
 
 def main():
@@ -68,9 +68,9 @@ def main():
         This project was built using Streamlit
         to demonstrate Cat and Dog detection in images.
     """)
-    
+
     choice = st.sidebar.selectbox("MODE", ("About", "Image"))
-    
+
     if choice == "Image":
         st.subheader("Object Detection")
         object_detection_image()
